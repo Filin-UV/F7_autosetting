@@ -1,0 +1,2 @@
+pgrep libgpiod_pulsein
+kill pid

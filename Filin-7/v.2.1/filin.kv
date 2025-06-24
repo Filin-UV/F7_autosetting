@@ -1,0 +1,328 @@
+<InitScreen>:
+    lp: load_perc
+    BoxLayout:
+        orientation: "vertical"
+        Image:
+            source: "res/init_screen.jpg"
+            size: 640*1.5, 480*1.5
+            size_hint: None, None
+            #pos_hint: {"x": .05, "y": .05}
+        ProgressBar:
+            id: load_perc
+            value: 0
+        Label:
+            text: "ver.0.0.1"
+
+<MainScreen>:
+    mode_button: f1
+    thr_button: f2
+    ai_button: f3
+    shot_button: f4
+    settings_button: f5
+
+    mxmd: mix_mode
+    uvmd: uv_mode
+    vsmd: vis_mode
+    thr_slider: thr_slider
+    canva: image_canvas
+    
+    FloatLayout:
+        Image:
+            id: image_canvas
+            #source: "res/test_pic.jpg"
+            size: 640, 480
+            size_hint: None, None
+            pos_hint: {"x": .05, "y": .05}
+            
+
+    FloatLayout:
+        id: menu_buts
+        orientation: "horizontal"
+        touch_multitouch: False
+        # padding: 250
+        # spacing: 50
+
+        # Movable subwidgets
+
+        RoundedButton:
+            id: mix_mode
+            text: "Mix"
+            size: 60, 60
+            size_hint: None, None
+            pos_hint: {"right": 1.2, "top": 1}
+            background_color: (48/255, 84/255, 150/255, 0)
+            background_normal: ""
+            on_release: root.acceptmodes(0)
+
+        RoundedButton:
+            id: uv_mode
+            text: "UV"
+            size: 60, 60
+            size_hint: None, None
+            pos_hint: {"right": 1.2, "top": 1}
+            background_color: (48/255, 84/255, 150/255, 0)
+            background_normal: ""
+            on_release: root.acceptmodes(1)
+
+        RoundedButton:
+            id: vis_mode
+            text: "Vis"
+            size: 60, 60
+            size_hint: None, None
+            pos_hint: {"right": 1.2, "top": 1}
+            background_color: (48/255, 84/255, 150/255, 0)
+            background_normal: ""
+            on_release: root.acceptmodes(2)
+
+        Slider:
+            id: thr_slider
+            min: 200
+            max: 255
+            value: 200
+            orientation: 'vertical'
+            size: 30, 400
+            size_hint: None, None
+            pos_hint: {"right": .85, "top": 2.98}
+            value_track: True
+            value_track_color: [1, 0, 0, 1]
+            on_touch_move: root.update_slider(0)
+
+# Basic widgets
+
+        Button:
+            id: f1
+            text: "Mode:\nMix"
+            size_hint: 0.1, 0.2
+            pos_hint: {"right": 1, "top": 1}
+            on_release: root.showmodes()
+
+        Button:
+            id: f2
+            text: "Threshold:\n99"
+            size_hint: 0.1, 0.2
+            pos_hint: {"right": 1, "top": 0.8}
+            on_release: root.showslider(0)
+
+        Button:
+            id: f3
+            text: "AI assist:\nOFF"
+            size_hint: 0.1, 0.2
+            pos_hint: {"right": 1, "top": 0.6}
+            touch_multitouch: False
+            on_press: root.AI_callback()
+
+        Button:
+            id: f4
+            text: "Shot"
+            size_hint: 0.1, 0.2
+            pos_hint: {"right": 1, "top": 0.4}
+            touch_multitouch: False
+            #on_press: 
+            on_press: 
+                root.preview()
+                root.manager.transition.direction = 'down'
+                root.manager.current = 'view'
+            #on_touch_move: root.shotclicked(1)
+
+        Button:
+            id: f5
+            text: "Settings"
+            size_hint: 0.1, 0.2
+            pos_hint: {"right": 1, "top": 0.2}
+            on_press: 
+                root.manager.transition.duration = 0.4
+                root.manager.transition.direction = 'up'
+                root.manager.current = 'settings'
+
+    
+
+<SettingsScreen>:
+    lang_button : sb1 
+    color_picker_button: sb2
+    capture_mode_button: sb3
+    accum_period_button: sb4
+    settings_layout: settings_layout
+    settings_label: settings_label
+    
+    BoxLayout:
+        orientation: "horizontal"
+        StackLayout:
+            orientation: "tb-lr"
+            padding: 15
+            spacing: 15
+            size_hint: [.45, 1]
+        
+            Button:
+                id: sb1
+                text: "Language"
+                size_hint: [.9, .1]
+                on_press: root.lang_button_pressed()
+            Button:
+                id: sb2
+                text: "Spot color"
+                size_hint: [.9, .1]
+                on_press: root.color_button_pressed()
+            Button:
+                id: sb3
+                text: "Capture mode"
+                size_hint: [.9, .1]
+                on_press: root.capture_mode_pressed()
+            Button:
+                id: sb4
+                text: "Accumulation period"
+                size_hint: [.9, .1]
+                on_press: root.accum_period_pressed()
+            Button:
+                id: sb5
+                text: "Temp unit"
+                size_hint: [.9, .1]
+                on_press: root.temp_unit_pressed()
+            Button:
+                id: sb6
+                text: "Save mode"
+                size_hint: [.9, .1]
+                on_press: root.save_mode_pressed()
+            Button:
+                id: sb7
+                text: "Brightness"
+                size_hint: [.9, .1]
+                on_press: root.brightness_pressed()
+            Button:
+                id: sb8
+                text: "Date&time"
+                size_hint: [.9, .1]
+                on_press: root.datetime_pressed()
+            Button:
+                text: "About"
+                size_hint: [.9, .1]
+            Button:
+                text: 'Back to main'
+                on_press: 
+                    root.manager.transition.direction = 'down'
+                    root.manager.current = 'main'
+                size_hint: [.9, .1]
+            
+        Image:
+            source: "res/line.jpg"
+            size: 20, 480
+            size_hint: None, None
+            #pos_hint: {"x": .45, "y": .05}
+            
+        
+        BoxLayout:
+            orientation: "vertical"    
+            Label:
+                id: settings_label
+                text: 'Choose the category:'
+                size_hint: [1, .2]
+                
+            BoxLayout:
+                id: settings_layout
+                orientation: "vertical"
+                padding: 15
+                spacing: 15
+        
+
+    
+<ViewScreen>:
+    info_button: f1
+    zoom_button: f2
+    save_button: f3
+    cancel_button: f3
+    
+    view_canva: image_canvas
+    miniature_canva: miniature_canvas
+    mini_layout: mini_layout
+    #loading_bar: loading_bar
+                
+    BoxLayout:
+        orientation: "horizontal" 
+        
+        FloatLayout:
+            Image:
+                id: image_canvas
+                #source: "test_pic.jpg" 
+                size: 640, 480
+                size_hint: None, None
+                pos_hint: {"x": .05, "y": .05}
+            
+        BoxLayout:
+            orientation: "vertical"
+            Button:
+                id: f1
+                text: "Info"
+                size_hint: 0.2, 0.25
+                pos_hint: {"right": 1, "top": 1.0}
+                on_release: root.preview_info()
+
+            Button:
+                id: f2
+                text: "Zoom:\n1x"
+                size_hint: 0.2, 0.25
+                pos_hint: {"right": 1, "top": 0.75}
+                on_release: root.zoom_callback()
+
+            Button:
+                id: f3
+                text: "Save"
+                size_hint: 0.2, 0.25
+                pos_hint: {"right": 1, "top": 0.5}
+                touch_multitouch: False
+                on_press: 
+                    root.save_callback()
+                    root.manager.transition.direction = 'down'
+                    root.manager.current = 'main'
+            Button:
+                id: f4
+                text: "Cancel"
+                size_hint: 0.2, 0.25
+                pos_hint: {"right": 1, "top": 0.25}
+                touch_multitouch: False
+                on_press: 
+                    root.manager.transition.direction = 'down'
+                    root.manager.current = 'main'
+    FloatLayout:
+        id: mini_layout
+        opacity: 0
+        size: 130, 98
+        size_hint: None, None
+        pos_hint: {"right": 0.85, "top": 0.95}
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        Image:
+            id: miniature_canvas
+            opacity: 0
+            #source: "test_pic.jpg" 
+            size: 128, 96
+            size_hint: None, None
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+            
+#     FloatLayout:
+#         size: 500, 500
+#         size_hint: None, None
+#         pos_hint: {"center_x": .5, "center_y": .5}
+#         ProgressBar:
+#             id: loading_bar
+#             opacity: 1
+#             value: 0
+#             ##size: 500, 100
+#             ##size_hint: None, None
+#             pos_hint: {"center_x": .5, "center_y": 1.5}
+
+
+<RoundedButton@Button>
+    background_color: (0, 0, 0, 0)
+    background_normal: ""
+    canvas.before:
+        Color:
+            rgba: (48/255, 84/255, 150/255, 1)
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: [80]
+            
+            
