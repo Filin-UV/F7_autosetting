@@ -1,0 +1,6 @@
+wallpaper_image = Image("Filin-logo_v2_1.png");
+for (i = 1; i <= 10; i++) {
+    frame = "Filin-logo_v2_" + i + ".png";
+    wallpaper_image = Image(frame);
+    sleep 0.1;
+}

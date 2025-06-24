@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=f7_theme
+Description=Filin-7 Desktop Splash
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/f7_theme
+ScriptFile=/usr/share/plymouth/themes/f7_theme/f7_theme.script
