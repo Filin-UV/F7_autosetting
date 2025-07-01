@@ -1,0 +1,8 @@
+python -m venv f7_env
+cd f7_env/bin
+source activate
+
+sudo apt install libavcodec-dev libavdevice-dev libavfilter-dev libavutil-dev libswscale-dev libswresample-dev libpostproc-dev
+sudo apt install libsdl2-dev
+python -m pip install "kivy[full]" kivy_examples
+python -m pip install opencv-python
