@@ -1,0 +1,12 @@
+[Unit]
+Description=F7 Start Service
+After=multi-user.target
+
+[Service]
+User=filin  # Имя пользователя, от имени которого будет запускаться команда, указанная в ExecStart
+WorkingDirectory=/home/filin/Filin-7  # Директория, в которую будет осуществлён переход перед запуском
+ExecStart=/home/filin/Filin-7/f7_venv/bin/python /home/filin/Filin-7/main.py
+Restart=always  # Всегда перезапускать скрипт при его падениях
+
+[Install]
+WantedBy=multi-user.target
